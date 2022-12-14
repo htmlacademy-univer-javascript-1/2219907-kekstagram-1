@@ -14,12 +14,7 @@ export function bigPicShow(photosData) {
   bigPicContainer.querySelector('.comments-loader').classList.add('hidden');
 
   photosData.comments.forEach((comment) => {
-    const newComment = commentTemplate.cloneNode(true);
-    const newCommentImage = newComment.querySelector('img');
-    newCommentImage.src = comment.avatar;
-    newCommentImage.alt = comment.name;
-    newComment.querySelector('p').textContent = comment.message;
-    commentsFragment.append(newComment);
+    commentsFragment.append(createComment(comment));
   });
 
   closeButon.addEventListener('click', bigPicClose);
@@ -29,7 +24,7 @@ export function bigPicShow(photosData) {
   commentList.append(commentsFragment);
   bigPicContainer.classList.remove('hidden');
   document.body.classList.add('modal-open');
-};
+}
 
 function bigPicClose() {
   bigPicContainer.classList.add('hidden');
@@ -41,4 +36,13 @@ function onEscClose(evt) {
   if (evt.key === 'Escape') {
     bigPicClose();
   }
+}
+
+function createComment(comment) {
+  const newComment = commentTemplate.cloneNode(true);
+  const newCommentImage = newComment.querySelector('img');
+  newCommentImage.src = comment.avatar;
+  newCommentImage.alt = comment.name;
+  newComment.querySelector('p').textContent = comment.message;
+  return newComment;
 }
