@@ -1,18 +1,19 @@
-const template = document.querySelector('#picture').content;
-const picContainer = document.querySelector('.pictures');
+import { bigPicShow } from './bigPic';
+
+const template = document.querySelector('#picture').content.querySelector('.picture');
+const picturesList = document.querySelector('.pictures');
 const picFragment = document.createDocumentFragment();
+
 
 export function drawPhotos(photosData) {
   for (let i=0;i<photosData.length;i++) {
     const post = template.cloneNode(true);
-    const image = post.querySelector('.picture__img');
-    const comments = post.querySelector('.picture__comments');
-    const likes = post.querySelector('.picture__likes');
-
-    image.src = photosData[i].url;
-    comments.textContent = photosData[i].comments.length;
-    likes.textContent = photosData[i].likes;
+    post.querySelector('.picture__img').src = photosData[i].url;
+    post.querySelector('.picture__comments').textContent = photosData[i].comments.length;
+    post.querySelector('.picture__likes').textContent = photosData[i].likes;
+    post.addEventListener('click', () => {bigPicShow(photosData[i]);});
     picFragment.append(post);
   }
-  picContainer.append(picFragment);
+  picturesList.append(picFragment);
 }
+
