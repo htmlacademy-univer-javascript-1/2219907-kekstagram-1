@@ -15,9 +15,9 @@ export function bigPicShow(photosData) {
 
   commentList.innerHTML = '';
   moreCommBut.classList.remove('hidden');
-  drawComments(photosData);
-  moreCommBut.addEventListener('click', () => {drawComments(photosData);});
+  drawComments(photosData.comments);
 
+  moreCommBut.onclick = () => drawComments(photosData.comments);
   closeButton.addEventListener('click', bigPicClose);
   document.addEventListener('keydown', onEscClose);
 
@@ -30,6 +30,7 @@ function bigPicClose() {
   BodyModalClose();
   document.removeEventListener('keydown', onEscClose);
   closeButton.removeEventListener('click', bigPicClose);
+  moreCommBut.onclick = '';
 }
 
 function onEscClose(evt) {
@@ -39,18 +40,18 @@ function onEscClose(evt) {
   }
 }
 
-function drawComments(photosData) {
+function drawComments(comments) {
   const commentsFragment = document.createDocumentFragment();
   const curCount = commentList.childElementCount;
 
-  photosData.comments.slice(curCount, curCount + 5).forEach((comment) => {
+  comments.slice(curCount, curCount + 5).forEach((comment) => {
     commentsFragment.append(createComment(comment));
   });
 
   curCommentCount.textContent = curCount + commentsFragment.childElementCount;
   commentList.append(commentsFragment);
 
-  if (photosData.comments.length - commentList.childElementCount === 0) {
+  if (comments.length - commentList.childElementCount === 0) {
     moreCommBut.classList.add('hidden');
   }
 }

@@ -23,7 +23,7 @@ function openForm(evt) {
 
 function closeForm(evt) {
   overlay.classList.add('hidden');
-  uploadInput.value = '';
+  uploadInput.value = hashInput.value = commInput.value = '';
   BodyModalClose();
   document.removeEventListener('keydown', onEscClose);
   closeButton.removeEventListener('click', closeForm);
