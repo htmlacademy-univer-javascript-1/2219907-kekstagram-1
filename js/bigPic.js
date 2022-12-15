@@ -18,7 +18,7 @@ export function bigPicShow(photosData) {
   });
 
   closeButon.addEventListener('click', bigPicClose);
-  document.onkeydown = onEscClose;
+  document.addEventListener('keydown', onEscClose);
 
   commentList.innerHTML = '';
   commentList.append(commentsFragment);
@@ -30,10 +30,12 @@ function bigPicClose() {
   bigPicContainer.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscClose);
+  closeButon.removeEventListener('click', bigPicClose);
 }
 
 function onEscClose(evt) {
   if (evt.key === 'Escape') {
+    evt.preventDefault();
     bigPicClose();
   }
 }
