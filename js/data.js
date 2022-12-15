@@ -47,6 +47,6 @@ export function CreatePosts(quantity) {
     url: `photos/${i + 1}.jpg`,
     description: 'Post',
     likes: GetRandomPositiveNumber(15, 200),
-    comments: CreateComments(GetRandomPositiveNumber(1, 10))
+    comments: CreateComments(GetRandomPositiveNumber(1, 15))
   }));
 }
