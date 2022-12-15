@@ -8,4 +8,9 @@ function GetRandomPositiveNumber(min, max) {
 // eslint-disable-next-line no-unused-vars
 const CheckStringLength = (str, length) => str.length <= length;
 
+export const isEscape = (evt) => evt.key === 'Escape';
+export const BodyModalOpen = () => document.body.classList.add('modal-open');
+export const BodyModalClose = () => document.body.classList.remove('modal-open');
+
+
 export {GetRandomPositiveNumber, CheckStringLength};

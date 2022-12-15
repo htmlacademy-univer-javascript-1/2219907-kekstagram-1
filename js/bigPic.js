@@ -1,7 +1,9 @@
+import { BodyModalOpen, BodyModalClose, isEscape } from './util.js';
+
 const bigPicContainer = document.querySelector('.big-picture');
 const commentList = bigPicContainer.querySelector('.social__comments');
 const commentTemplate = commentList.querySelector('.social__comment');
-const closeButon = bigPicContainer.querySelector('.cancel');
+const closeButton = bigPicContainer.querySelector('.cancel');
 
 export function bigPicShow(photosData) {
   const commentsFragment = document.createDocumentFragment();
@@ -17,24 +19,24 @@ export function bigPicShow(photosData) {
     commentsFragment.append(createComment(comment));
   });
 
-  closeButon.addEventListener('click', bigPicClose);
+  closeButton.addEventListener('click', bigPicClose);
   document.addEventListener('keydown', onEscClose);
 
   commentList.innerHTML = '';
   commentList.append(commentsFragment);
   bigPicContainer.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  BodyModalOpen();
 }
 
 function bigPicClose() {
   bigPicContainer.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  BodyModalClose();
   document.removeEventListener('keydown', onEscClose);
-  closeButon.removeEventListener('click', bigPicClose);
+  closeButton.removeEventListener('click', bigPicClose);
 }
 
 function onEscClose(evt) {
-  if (evt.key === 'Escape') {
+  if (isEscape(evt)) {
     evt.preventDefault();
     bigPicClose();
   }
