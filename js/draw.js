@@ -17,3 +17,4 @@ export function drawPhotos(photosData) {
   picturesList.append(picFragment);
 }
 
+export const clearPictures = () => picturesList.querySelectorAll('.picture').forEach((pic) => pic.remove());
