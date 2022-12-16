@@ -2,8 +2,8 @@ import { sendData } from './api.js';
 import { disableEditTools, enableEditTools } from './photoEdit.js';
 import { showMsg } from './stateMsg.js';
 import { BodyModalOpen, BodyModalClose, isEscape } from './util.js';
-import './val.js';
-import { pristineValidate, resetPristine } from './val.js';
+import './validate.js';
+import { pristineValidate, resetPristine } from './validate.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadInput = form.querySelector('#upload-file');
@@ -20,7 +20,7 @@ function openForm(evt) {
   image.src = URL.createObjectURL(evt.target.files[0]);
   overlay.classList.remove('hidden');
   BodyModalOpen();
-  UnBlockSendButton();
+  sendButton.disabled = false;
   document.addEventListener('keydown', onEscClose);
   closeButton.addEventListener('click', closeForm);
   form.addEventListener('submit', onSubmitForm);
@@ -52,17 +52,9 @@ function onEscClose(evt) {
 function onSubmitForm(evt) {
   evt.preventDefault();
   if (pristineValidate()) {
-    BlockSendButton();
+    sendButton.disabled = true;
     sendData(onSuccessSend, onFailSend, new FormData(form));
   }
-}
-
-function BlockSendButton() {
-  sendButton.disabled = true;
-}
-
-function UnBlockSendButton() {
-  sendButton.disabled = false;
 }
 
 function onSuccessSend() {
