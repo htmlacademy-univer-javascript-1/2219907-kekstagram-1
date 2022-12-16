@@ -32,6 +32,7 @@ export function disableEditTools() {
   effectLevelField.classList.add('visually-hidden');
   image.style.filter = null;
   image.className = null;
+  effectsList.querySelectorAll('input').forEach((item) => {item.checked = item.defaultChecked;});
 }
 
 function onEffectClick(evt) {

@@ -6,24 +6,22 @@ const biggerScaleBtn = form.querySelector('.scale__control--bigger');
 let currentScale = 100;
 
 export function enableScale() {
-  lowerScaleBtn.addEventListener('click', getScaleFunction(true));
-  biggerScaleBtn.addEventListener('click', getScaleFunction(false));
+  lowerScaleBtn.addEventListener('click', changeScale);
+  biggerScaleBtn.addEventListener('click', changeScale);
 }
 
 export function resetScale() {
-  lowerScaleBtn.removeEventListener('click', getScaleFunction(true));
-  biggerScaleBtn.removeEventListener('click', getScaleFunction(false));
+  lowerScaleBtn.removeEventListener('click', changeScale);
+  biggerScaleBtn.removeEventListener('click', changeScale);
   currentScale = 100;
   image.style.transform = null;
   scaleValueInput.value = `${currentScale}%`;
 }
 
-export function getScaleFunction(isLower) {
-  function changeScale() {
-    if ((isLower && currentScale === 25) || (!isLower && currentScale === 100)) {return;}
-    currentScale += isLower ? -25 : 25;
-    scaleValueInput.value = `${currentScale}%`;
-    image.style.transform = `scale(${currentScale / 100})`;
-  }
-  return changeScale;
+function changeScale(evt) {
+  const isLower = evt.target.classList.contains('scale__control--smaller');
+  if ((isLower && currentScale === 25) || (!isLower && currentScale === 100)) {return;}
+  currentScale += isLower ? -25 : 25;
+  scaleValueInput.value = `${currentScale}%`;
+  image.style.transform = `scale(${currentScale / 100})`;
 }
