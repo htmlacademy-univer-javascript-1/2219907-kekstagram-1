@@ -1,4 +1,4 @@
-import { clearPictures, drawPhotos } from './draw.js';
+import { clearPictures, drawPhotos } from './drawPictures.js';
 import { debounce, GetRandomMassivElements } from './util.js';
 
 const filters = document.querySelector('.img-filters');

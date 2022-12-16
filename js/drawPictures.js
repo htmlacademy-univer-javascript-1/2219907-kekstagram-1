@@ -1,4 +1,4 @@
-import { bigPicShow } from './bigPic.js';
+import { bigPicShow } from './bigPicture.js';
 
 const template = document.querySelector('#picture').content.querySelector('.picture');
 const picturesList = document.querySelector('.pictures');

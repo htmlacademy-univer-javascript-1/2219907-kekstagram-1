@@ -5,6 +5,8 @@ const form = document.querySelector('.img-upload__form');
 const hashInput = form.querySelector('.text__hashtags');
 const commInput = form.querySelector('.text__description');
 
+const validateComment = (comment) => CheckStringLength(comment, 140);
+
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
@@ -24,10 +26,6 @@ function validateHashTags(tags) {
   return tags.every((tag) => hashTagRegEx.test(tag)) &&
   tags.length === uniqTags.length &&
   tags.length <= 5;
-}
-
-function validateComment(comment) {
-  return CheckStringLength(comment, 140);
 }
 
 export function escOnFocus(evt) {
