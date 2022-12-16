@@ -5,6 +5,17 @@ function GetRandomPositiveNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+export function GetRandomMassivElements(array, quantity) {
+  array = array.slice();
+  for (let i = 0 ; (i < quantity) && (i < array.length) ; i++) {
+    const r = GetRandomPositiveNumber(i, quantity);
+    const item = array[r];
+    array[r] = array[i];
+    array[i] = item;
+  }
+  return array.slice(0, quantity);
+}
+
 // eslint-disable-next-line no-unused-vars
 const CheckStringLength = (str, length) => str.length <= length;
 
@@ -37,9 +48,6 @@ export function onFail(err) {
   showAlert(`Ошибка загрузки изображений - ${err.status}`);
 }
 
-// Функция взята из интернета и доработана
-// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
-
 function debounce (callback, timeoutDelay = 500) {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
@@ -57,9 +65,6 @@ function debounce (callback, timeoutDelay = 500) {
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
 }
-
-// Функция взята из интернета и доработана
-// Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_throttle
 
 function throttle (callback, delayBetweenFrames) {
   // Используем замыкания, чтобы время "последнего кадра" навсегда приклеилось
