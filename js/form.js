@@ -12,11 +12,12 @@ const closeButton = form.querySelector('#upload-cancel');
 const hashInput = form.querySelector('.text__hashtags');
 const commInput = form.querySelector('.text__description');
 const sendButton = form.querySelector('.img-upload__submit');
+const image = form.querySelector('.img-upload__preview img');
 let isAfterError = false;
 uploadInput.addEventListener('change', openForm);
 
-function openForm() {
-  //image.src = evt.target.files[0].getAsDataUrl();
+function openForm(evt) {
+  image.src = URL.createObjectURL(evt.target.files[0]);
   overlay.classList.remove('hidden');
   BodyModalOpen();
   UnBlockSendButton();
