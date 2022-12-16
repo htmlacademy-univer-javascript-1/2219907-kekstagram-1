@@ -2,9 +2,10 @@ import { bigPicShow } from './bigPic.js';
 
 const template = document.querySelector('#picture').content.querySelector('.picture');
 const picturesList = document.querySelector('.pictures');
-const picFragment = document.createDocumentFragment();
 
 export function drawPhotos(photosData) {
+  const picFragment = document.createDocumentFragment();
+
   for (let i=0;i<photosData.length;i++) {
     const post = template.cloneNode(true);
     post.querySelector('.picture__img').src = photosData[i].url;

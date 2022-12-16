@@ -17,6 +17,7 @@ hashInput.onkeydown = escOnFocus;
 commInput.onkeydown = escOnFocus;
 
 function validateHashTags(tags) {
+  if (tags === '') {return true;}
   tags = tags.toLowerCase().split(' ');
   const uniqTags = [...new Set(tags)];
 
@@ -35,9 +36,5 @@ export function escOnFocus(evt) {
   }
 }
 
-form.addEventListener('submit', onSubmitForm);
-
-function onSubmitForm(evt) {
-  evt.preventDefault();
-  pristine.validate();
-}
+export const pristineValidate = () => pristine.validate();
+export const resetPristine = () => pristine.reset();
