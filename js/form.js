@@ -1,36 +1,44 @@
+import { sendData } from './api.js';
 import { disableEditTools, enableEditTools } from './photoEdit.js';
+import { showMsg } from './stateMsg.js';
 import { BodyModalOpen, BodyModalClose, isEscape } from './util.js';
 import './val.js';
+import { pristineValidate, resetPristine } from './val.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadInput = form.querySelector('#upload-file');
 const overlay = form.querySelector('.img-upload__overlay');
-const image = form.querySelector('.img-upload__preview img');
 const closeButton = form.querySelector('#upload-cancel');
 const hashInput = form.querySelector('.text__hashtags');
 const commInput = form.querySelector('.text__description');
-const submitButton = form.querySelector('.img-upload__submit');
-
+const sendButton = form.querySelector('.img-upload__submit');
+let isAfterError = false;
 uploadInput.addEventListener('change', openForm);
 
-function openForm(evt) {
+function openForm() {
   //image.src = evt.target.files[0].getAsDataUrl();
   overlay.classList.remove('hidden');
   BodyModalOpen();
-  enableEditTools();
-  closeButton.addEventListener('click', closeForm);
+  UnBlockSendButton();
   document.addEventListener('keydown', onEscClose);
-  //form.addEventListener('submit', onSubmitForm);
-
+  closeButton.addEventListener('click', closeForm);
+  form.addEventListener('submit', onSubmitForm);
+  if (isAfterError) {
+    isAfterError = false;
+    return; }
+  enableEditTools();
 }
 
-function closeForm(evt) {
+export function closeForm() {
   overlay.classList.add('hidden');
-  uploadInput.value = hashInput.value = commInput.value = '';
+  uploadInput.value = '';
   BodyModalClose();
-  disableEditTools();
+  resetPristine();
   document.removeEventListener('keydown', onEscClose);
   closeButton.removeEventListener('click', closeForm);
+  if (isAfterError) { return; }
+  hashInput.value = commInput.value = '';
+  disableEditTools();
 }
 
 function onEscClose(evt) {
@@ -40,13 +48,29 @@ function onEscClose(evt) {
   }
 }
 
-/* function onSubmitForm(evt) {
+function onSubmitForm(evt) {
   evt.preventDefault();
-
-  if (validateForm(form, hashInput, commInput)) {
-    submitButton.disabled = true;
+  if (pristineValidate()) {
+    BlockSendButton();
+    sendData(onSuccessSend, onFailSend, new FormData(form));
   }
-} */
+}
 
+function BlockSendButton() {
+  sendButton.disabled = true;
+}
 
+function UnBlockSendButton() {
+  sendButton.disabled = false;
+}
 
+function onSuccessSend() {
+  closeForm();
+  showMsg(false);
+}
+
+function onFailSend() {
+  isAfterError = true;
+  closeForm();
+  showMsg(true);
+}
